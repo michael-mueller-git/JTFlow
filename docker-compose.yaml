@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  server:
+    # image: ghcr.io/michael-mueller-git/jt-flow:dev
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+    container_name: jt-flow
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./videos:/videos"
