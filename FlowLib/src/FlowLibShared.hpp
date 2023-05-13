@@ -30,4 +30,4 @@ FlowLibShared* CreateFlowLib(const char* videoPath, FlowProperties* properties);
 
 extern LoggingCallback logger;
 // #define MY_LOG(message) if(logger) { logger(0, message); } else { CV_LOG_INFO(NULL, message); }
-#define MY_LOG(message) printf(message); printf("\n");
+#define MY_LOG(...) printf(__VA_ARGS__); printf("\n");
