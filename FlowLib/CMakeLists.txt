@@ -94,6 +94,9 @@ SET(LIB_CUVID "nvcuvid")
 if(DOCKER)
     SET(LIB_CUVID "/usr/lib/x86_64-linux-gnu/libnvcuvid.so.1")
 endif()
+if(NIX)
+    SET(LIB_CUVID "lib/libnvcuvid.so")
+endif()
 
 target_link_libraries(JTFlowCuda PRIVATE
     cuda
