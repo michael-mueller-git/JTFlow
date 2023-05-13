@@ -1,5 +1,7 @@
 #include "ReadFlow.h"
 
+#include <cuda.h>
+#include <cuda_runtime.h>
 #include "nvcuvid.h"
 //#include "opencv2/opencv_modules.hpp"
 #include "opencv2/cudev/common.hpp"
