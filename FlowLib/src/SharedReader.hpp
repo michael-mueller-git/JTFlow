@@ -4,6 +4,7 @@ extern "C" {
 #include <libavformat/avformat.h>
 }
 
+#include <string>
 #include <map>
 #include <cmath>
 
