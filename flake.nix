@@ -48,11 +48,13 @@
         configurePhase = ''
           echo "include_directories(${pkgs.nv-codec-headers-11}/include/ffnvcodec)" >> FlowLib/CMakeLists.txt
         '';
-        buildPhase = "${pkgs.cmake}/bin/cmake FlowLib -DNIX=ON -DCUDA_CUDART_LIBRARY=${pkgs.cudaPackages.cudatoolkit}/lib -DOpenCL_INCLUDE_DIR=${pkgs.opencl-headers}/include -DOpenCL_LIBRARY=${pkgs.clang-ocl}/lib -DCMAKE_CXX_STANDARD_REQUIRED=ON -DCMAKE_CXX_STANDARD=17 -DOpenCV_DIR=${pkgs.opencv}/lib/cmake/opencv4 -DPython3_NumPy_INCLUDE_DIRS=${pkgs.python310Packages.numpy} -DCMAKE_CUDA_ARCHITECTURES=75 && make -j $NIX_BUILD_CORES";
+        buildPhase = "${pkgs.cmake}/bin/cmake FlowLib -DNIX=ON -DCUDA_CUDART_LIBRARY=${pkgs.cudaPackages.cudatoolkit}/lib -DOpenCL_INCLUDE_DIR=${pkgs.opencl-headers}/include -DOpenCL_LIBRARY=${pkgs.ocl-icd}/lib/libOpenCL.so -DCMAKE_CXX_STANDARD_REQUIRED=ON -DCMAKE_CXX_STANDARD=17 -DOpenCV_DIR=${pkgs.opencv}/lib/cmake/opencv4 -DPython3_NumPy_INCLUDE_DIRS=${pkgs.python310Packages.numpy} -DCMAKE_CUDA_ARCHITECTURES=75 && make -j $NIX_BUILD_CORES JTFlowLav && make -j $NIX_BUILD_CORES JTFlowUtilLav";
         installPhase = ''
           mkdir -p $out/bin
-          # mv FlowLibUtil $out/bin
-          echo "TODO copy all binaries when cuda problem is fixed"
+          mkdir -p $out/lib
+          ls
+          mv -fv libJTFlowLav.so $out/lib
+          mv -fv JTFlowUtilLav $out/bin/JTFlow
         '';
       }
       );
