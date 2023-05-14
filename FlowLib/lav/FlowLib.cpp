@@ -12,7 +12,7 @@ extern "C" {
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/ocl.hpp>
-#include <CL/cl.hpp>
+#include <CL/cl2.hpp>
 
 #include <stdexcept>
 #include <fstream>

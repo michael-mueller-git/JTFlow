@@ -21,7 +21,6 @@ set(OpenCV_LIBRARIES
     opencv_core
     # opencv_cudaarithm
     # opencv_cudaimgproc
-    opencv_cudaoptflow
     # opencv_cudawarping
     # opencv_cudev
     # opencv_features2d
@@ -34,7 +33,9 @@ set(OpenCV_LIBRARIES
     # opencv_ximgproc
 )
 
-
+if(CUDA)
+list(APPEND OpenCV_LIBRARIES opencv_cudaoptflow)
+endif()
 
 # FFmpeg
 include_directories(${FFMPEG_INCLUDE_DIRS})
@@ -70,7 +71,7 @@ SET(LIB_ADD
 )
 
 # -- JTFlowCuda --
-
+if(CUDA)
 add_library(JTFlowCuda SHARED
     cuda/FFmpegDemuxer.h
     cuda/NvDecoder.h
@@ -109,7 +110,7 @@ target_include_directories(JTFlowCuda PRIVATE
 )
 
 install(TARGETS JTFlowCuda LIBRARY DESTINATION lib)
-
+endif()
 # -- JTFlowLav --
 
 add_library(JTFlowLav SHARED
@@ -146,8 +147,14 @@ add_executable(JTFlowUtilLav src/Main.cpp)
 target_compile_definitions(JTFlowUtilLav PRIVATE FLOWLIB_IMPORT)
 target_link_libraries(JTFlowUtilLav PRIVATE JTFlowLav)
 
+if(CUDA)
 add_executable(JTFlowUtilCuda src/Main.cpp)
 target_compile_definitions(JTFlowUtilCuda PRIVATE FLOWLIB_IMPORT)
 target_link_libraries(JTFlowUtilCuda PRIVATE JTFlowCuda)
+endif()
 
-install(TARGETS JTFlowUtilLav JTFlowUtilCuda RUNTIME DESTINATION bin)
+if(CUDA)
+    install(TARGETS JTFlowUtilLav JTFlowUtilCuda RUNTIME DESTINATION bin)
+else()
+install(TARGETS JTFlowUtilLav RUNTIME DESTINATION bin)
+endif()
